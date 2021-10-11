@@ -1,8 +1,10 @@
 import torch
 import torch.nn as nn
-import matplotlib.pyplot as plt
+import cv2
 
 N_IDEAS = 5
+
+cv2.namedWindow('show')
 
 
 class G_Net(nn.Module):
@@ -68,6 +70,7 @@ class G_Net(nn.Module):
         return output
 
 
+
 G_net = torch.load('net.pkl')
 
 ideas = torch.randn((100, 5))
@@ -92,8 +95,10 @@ print(result.shape)
 result = torch.cat(list(result), 1)
 print(result.shape)
 
-plt.imsave('show', (result*255).int().numpy(), cmap='gray')
+cv2.imshow('show', result.detach().numpy())
+cv2.waitKey()
 
+cv2.destroyAllWindows()
 
 
 
